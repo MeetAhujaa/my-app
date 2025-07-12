@@ -1,4 +1,4 @@
-/* Reset and base styles */
+
 * {
   margin: 0;
   padding: 0;
@@ -25,7 +25,7 @@ body {
   color: var(--text-primary);
 }
 
-/* Layout */
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -40,7 +40,7 @@ body {
   width: 100%;
 }
 
-/* Navbar */
+
 .navbar {
   background-color: var(--secondary-bg);
   padding: 1rem 2rem;
@@ -83,7 +83,7 @@ body {
   background-color: var(--hover-bg);
 }
 
-/* Home Page */
+
 .home h1 {
   margin-bottom: 2rem;
   color: var(--text-primary);
@@ -151,7 +151,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* Chart */
+
 .chart-container {
   background: var(--card-bg);
   padding: 1.5rem;

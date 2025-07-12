@@ -29,10 +29,7 @@ function Signup() {
     }
 
     try {
-      // Here you would typically make an API call to your backend
-      // For now, we'll just simulate a successful signup
       if (formData.name && formData.email && formData.password) {
-        // Store the token in localStorage
         localStorage.setItem('token', 'dummy-token');
         navigate('/');
       } else {
