@@ -198,7 +198,7 @@ body {
   color: var(--text-secondary);
 }
 
-/* Portfolio */
+
 .portfolio {
   padding: 20px;
 }
@@ -295,7 +295,7 @@ tr:hover {
   background-color: var(--hover-bg);
 }
 
-/* News */
+
 .news {
   padding: 20px;
 }
@@ -372,7 +372,7 @@ tr:hover {
   border: 1px solid var(--border-color);
 }
 
-/* Scrollbar styling */
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -418,7 +418,7 @@ tr:hover {
   }
 }
 
-/* Animations */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -434,7 +434,7 @@ tr:hover {
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Add these to your existing styles */
+
 
 .logout-button {
   background: none;
@@ -452,7 +452,7 @@ tr:hover {
   background-color: var(--hover-bg);
 }
 
-/* Update navbar styles */
+
 .navbar {
   display: flex;
   justify-content: space-between;
