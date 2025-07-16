@@ -1,59 +1,60 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import React, { useState } from 'react';
 import Home from './components/Home';
-import Portfolio from './components/Portfolio';
 import News from './components/News';
-import Login from './components/auth/Login';
-import Signup from './components/auth/Signup';
-import './styles.css';
-
-// Protected Route component
-const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    return <Navigate to="/login" />;
-  }
-  return children;
-};
 
 function App() {
+  const [tab, setTab] = useState('dashboard');
+
   return (
-    <Router>
-      <div className="app">
-        <Navbar />
-        <main className="main-content">
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <Home />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/portfolio"
-              element={
-                <ProtectedRoute>
-                  <Portfolio />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/news"
-              element={
-                <ProtectedRoute>
-                  <News />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+    <div>
+      {/* Navigation Bar */}
+      <nav style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: '#181818',
+        padding: '1rem 0',
+        marginBottom: '2rem',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+      }}>
+        <button
+          style={{
+            background: tab === 'dashboard' ? '#4caf50' : '#222',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px 0 0 4px',
+            padding: '0.75rem 2rem',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            fontSize: '1rem',
+            outline: 'none',
+            transition: 'background 0.2s'
+          }}
+          onClick={() => setTab('dashboard')}
+        >
+          Dashboard
+        </button>
+        <button
+          style={{
+            background: tab === 'news' ? '#4caf50' : '#222',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '0 4px 4px 0',
+            padding: '0.75rem 2rem',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            fontSize: '1rem',
+            outline: 'none',
+            transition: 'background 0.2s'
+          }}
+          onClick={() => setTab('news')}
+        >
+          News
+        </button>
+      </nav>
+      {/* Main Content */}
+      {tab === 'dashboard' ? <Home /> : <News />}
+    </div>
   );
 }
 

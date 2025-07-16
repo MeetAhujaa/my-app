@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 function News() {
   const [news, setNews] = useState([]);
@@ -8,21 +7,14 @@ function News() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get('https://cryptopanic.com/api/v1/posts', {
-          params: {
-            auth_token: 'IyPBYsRAR1jV5dHd3eC6pzANyQy6GTUHeEUJ1JxrNFIiwwMzhy6Mnkne3DoYZCXZ',
-            currencies: 'BTC,ETH',
-            public: true
-          }
-        });
-        setNews(response.data.results);
+        const response = await fetch('https://cryptopanic.com/api/v1/posts?auth_token=IyPBYsRAR1jV5dHd3eC6pzANyQy6GTUHeEUJ1JxrNFIiwwMzhy6Mnkne3DoYZCXZ&currencies=BTC,ETH&public=true');
+        const data = await response.json();
+        setNews(data.results);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching news:', error);
         setLoading(false);
       }
     };
-
     fetchNews();
   }, []);
 
