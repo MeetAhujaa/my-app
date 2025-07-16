@@ -1,6 +1,7 @@
 import React from 'react';
 
 function CryptoCard({ crypto, onClick }) {
+  // This component is no longer used in the main dashboard, but is kept clean and error-free.
   const priceChangeClass = crypto.change24h >= 0 ? 'positive' : 'negative';
 
   return (

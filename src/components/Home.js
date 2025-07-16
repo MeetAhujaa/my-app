@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import CryptoCard from './CryptoCard';
 import PriceChart from './PriceChart';
 
 function Home() {
@@ -9,7 +7,6 @@ function Home() {
   const [btcLoading, setBtcLoading] = useState(true);
   const [cryptoData, setCryptoData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCrypto, setSelectedCrypto] = useState('BTC');
   // Global market overview state
   const [marketOverview, setMarketOverview] = useState({ marketCap: null, volume: null, btcDominance: null, loading: true });
   const [watchlist, setWatchlist] = useState([]);
@@ -24,11 +21,14 @@ function Home() {
   const [detailsHistory, setDetailsHistory] = useState([]);
   const [detailsLoading, setDetailsLoading] = useState(false);
 
+  const cors = 'https://corsproxy.io/?';
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://api.binance.com/api/v3/ticker/24hr');
-        const filteredData = response.data
+        const response = await fetch(`${cors}https://api.binance.com/api/v3/ticker/24hr`);
+        const data = await response.json();
+        const filteredData = data
           .filter(crypto => crypto.symbol.endsWith('USDT'))
           .slice(0, 10)
           .map(crypto => ({
@@ -56,7 +56,7 @@ function Home() {
     // Fetch BTC/USDT price
     const fetchBtcPrice = async () => {
       try {
-        const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+        const response = await fetch(`${cors}https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT`);
         const data = await response.json();
         setBtcPrice(parseFloat(data.price));
         setBtcLoading(false);
@@ -73,7 +73,7 @@ function Home() {
     // Fetch global market overview (simulate with top 100 USDT pairs)
     const fetchMarketOverview = async () => {
       try {
-        const response = await fetch('https://api.binance.com/api/v3/ticker/24hr');
+        const response = await fetch(`${cors}https://api.binance.com/api/v3/ticker/24hr`);
         const data = await response.json();
         const usdtPairs = data.filter(crypto => crypto.symbol.endsWith('USDT')).slice(0, 100);
         let totalMarketCap = 0;
@@ -175,7 +175,7 @@ function Home() {
   useEffect(() => {
     const fetchHistory = async (symbol) => {
       // Binance API: /api/v3/klines?symbol=BTCUSDT&interval=1d&limit=7
-      const res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1d&limit=7`);
+      const res = await fetch(`${cors}https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1d&limit=7`);
       const data = await res.json();
       // Return array of { time, close }
       return data.map(d => ({ time: d[0], close: parseFloat(d[4]) }));
@@ -250,7 +250,7 @@ function Home() {
     if (!detailsCoin) return;
     const fetchHistory = async () => {
       setDetailsLoading(true);
-      const res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${detailsCoin.symbol}&interval=1d&limit=30`);
+      const res = await fetch(`${cors}https://api.binance.com/api/v3/klines?symbol=${detailsCoin.symbol}&interval=1d&limit=30`);
       const data = await res.json();
       setDetailsHistory(data.map(d => ({ time: d[0], close: parseFloat(d[4]) })));
       setDetailsLoading(false);
@@ -534,8 +534,8 @@ function Home() {
         </div>
       </div>
       <div className="chart-container">
-        <h2>{selectedCrypto} Price Chart</h2>
-        <PriceChart symbol={selectedCrypto} />
+        <h2>BTC Price Chart</h2>
+        <PriceChart symbol="BTCUSDT" />
       </div>
       {/* Coin Details Modal */}
       {detailsCoin && (
